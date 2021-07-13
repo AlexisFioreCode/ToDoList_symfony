@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Project index{% endblock %}
+
+{% block body %}
+{% if app.user %}
+        <div class="my-3 ">
+            Bonjour {{ app.user.firstname }} {{ app.user.lastname }} <a href="{{ path('app_logout') }}" class="btn btn-light">Se déconnecter</a>
+        </div>
+    {% endif %}
+    <h1>Tous tes projets</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created_date</th>
+                <th>Deadline</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.name }}</td>
+                <td>{{ project.description }}</td>
+                <td>{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('project_show', {'id': project.id}) }}">show</a>
+                    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <a class="btn btn-light" href="{{ path('project_new') }}">Nouveau projet</a>
+{% endblock %}
