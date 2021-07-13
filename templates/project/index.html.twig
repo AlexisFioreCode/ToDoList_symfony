@@ -4,43 +4,35 @@
 
 {% block body %}
 {% if app.user %}
-        <div class="my-3 ">
-            Bonjour {{ app.user.firstname }} {{ app.user.lastname }} <a href="{{ path('app_logout') }}" class="btn btn-light">Se déconnecter</a>
-        </div>
-    {% endif %}
-    <h1>Tous tes projets</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Created_date</th>
-                <th>Deadline</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project in projects %}
-            <tr>
-                <td>{{ project.id }}</td>
-                <td>{{ project.name }}</td>
-                <td>{{ project.description }}</td>
-                <td>{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('project_show', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    
-    <a class="btn btn-light" href="{{ path('project_new') }}">Nouveau projet</a>
+    <div class="my-3 ">
+        Bonjour {{ app.user.firstname }} {{ app.user.lastname }} <a href="{{ path('app_logout') }}" class="btn btn-light">Se déconnecter</a>
+    </div>
+{% endif %}
+<h1>Tous tes projets</h1>
+<a class="btn btn-light mt-3" href="{{ path('project_new') }}">Nouveau projet</a>
+<div class="row">
+{% for project in projects %}
+    <div class="col-sm-12 col-md-6 col-xl-3 py-5">
+        <div class="card text-center">
+            <div class="card-header">
+            Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Projet :{{ project.name }}</h5>
+                <p class="card-text">Description : {{ project.description }}</p>
+               <p class='text-danger fw-bold'> Fin du projet le :{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }} </p>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a type="button" href="{{ path('project_show', {'id': project.id}) }}" class="btn btn-outline-dark me-3">Voir</a>
+                    <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-dark me-3">Modifier</a>
+                    <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
+                </div>                   
+            </div>
+        </div> 
+    </div>       
+{% else %}
+        <h2 colspan="6">Aucun projet en cours</h2>
+{% endfor %}  
+</div>     
 {% endblock %}

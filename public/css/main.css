@@ -97,7 +97,7 @@ resize: vertical;
 body{
     min-height:100vh;
     max-width: 100vw;
-    background-color: #53A2BE;
+    background-color: #b0d6e4;
 }
 header {
     background-color: bisque;
@@ -131,6 +131,15 @@ footer {
     background-color: rgb(219, 191, 157);
     border-color: rgb(219, 191, 157);
 }
+.btn-outline-dark {
+    border-color: #8E7567;
+    color: #635147;
+}
+.btn-outline-dark:hover {
+    background-color: #635147;
+    border-color: #635147;
+}
+
 
 /* ==========================================================================
     Helper classes

@@ -34,5 +34,5 @@
 
     <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
 
-    {{ include('project/_delete_form.html.twig') }}
+    <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
 {% endblock %}

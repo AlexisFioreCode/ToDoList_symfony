@@ -47,4 +47,11 @@ class ProjectRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getProjects() {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.deadline', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
