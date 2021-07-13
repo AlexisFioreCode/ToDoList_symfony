@@ -9,16 +9,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+    /**
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
 
 #[Route('/project')]
 #[Route('/')]
+
+    
+
 class ProjectController extends AbstractController
 {
     #[Route('/', name: 'project_index', methods: ['GET'])]
     public function index(ProjectRepository $projectRepository): Response
-    {
+    {   
+        $projectRepository=$this->getDoctrine()->getRepository(Project::class);
+        $projects = $projectRepository->getProjects();
+
+
         return $this->render('project/index.html.twig', [
-            'projects' => $projectRepository->findAll(),
+            'projects' => $projects,
         ]);
     }
 
@@ -30,6 +42,8 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $project->setCreatedDate(new \DateTime());
+            $project->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($project);
             $entityManager->flush();
