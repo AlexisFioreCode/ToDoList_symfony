@@ -1,38 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Project{% endblock %}
+{% block title %}{{ project.name }}{% endblock %}
 
 {% block body %}
-    <h1>Project</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ project.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ project.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ project.description }}</td>
-            </tr>
-            <tr>
-                <th>Created_date</th>
-                <td>{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Deadline</th>
-                <td>{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('project_index') }}">back to list</a>
-
-    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
-
-    <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
+    <a class="btn btn-light my-3" href="{{ path('project_index') }}">Revenir à l'acceuil</a>
+    <h1>Le projet : {{ project.name }}</h1>
+    <div class="col-sm-12 col-md-6 col-xl-3 py-5">
+        <div class="card text-center">
+            <div class="card-header">
+            Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
+            </div>
+            <div class="card-body">
+                <p class="card-text">Description : {{ project.description }}</p>
+               <p class='text-danger fw-bold'> Fin du projet le :{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }} </p>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-dark me-3">Modifier</a>
+                    <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
+                </div>                   
+            </div>
+        </div> 
+    </div> 
 {% endblock %}
