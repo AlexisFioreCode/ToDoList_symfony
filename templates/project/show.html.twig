@@ -4,22 +4,48 @@
 
 {% block body %}
     <a class="btn btn-light my-3" href="{{ path('project_index') }}">Revenir à l'acceuil</a>
-    <h1>Le projet : {{ project.name }}</h1>
-    <div class="col-sm-12 col-md-6 col-xl-3 py-5">
-        <div class="card text-center">
-            <div class="card-header">
-            Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
-            </div>
-            <div class="card-body">
-                <p class="card-text">Description : {{ project.description }}</p>
-               <p class='text-danger fw-bold'> Fin du projet le :{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }} </p>
-            </div>
-            <div class="card-footer text-muted">
-                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                    <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-dark me-3">Modifier</a>
-                    <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
-                </div>                   
-            </div>
-        </div> 
-    </div> 
+    <h1 class='text-center mb-3 text-uppercase'>Le projet : {{ project.name }}</h1>
+    <div class="card text-center">
+        <div class="card-header">
+        Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
+        </div>
+        <div class="card-body">
+            <p class="card-text">Description : {{ project.description }}</p>
+            <p class='text-danger fw-bold'> Fin du projet le :{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }} </p>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-dark me-3">Modifier</a>
+                <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
+            </div>                   
+        </div>
+    </div>
+    <a class="btn btn-light mt-3" href="{{ path('task_new', {'projectId': project.id}) }}">Nouvelle tâche</a>
+    <div class="row">
+        {% if tasks is not empty %}
+            {% for task in tasks %}
+                <div class="col-sm-12 col-md-6 col-xl-3 py-5">
+                    <div class="card text-center">
+                        <div class="card-header">
+                        <p class="text-uppercase">{{ task.name }}</p>
+                        <p class="text-uppercase">{{ task.state }}</p> 
+                        Enregistré le :{{ task.createdDate ? task.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Description : {{ task.description }}</p>
+                        <p class='text-danger fw-bold'> Fin de la tâche prévue pour le :{{ task.deadline ? task.deadline|date('Y-m-d H:i:s') : '' }} </p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <a  type="button" href="{{ path('task_edit', {'id': task.id}) }}" class="btn btn-dark me-3">Modifier</a>
+                                <a  type="button" href="{{ path('task_delete', {'id': task.id}) }}"  class="btn btn-danger">Supprimer</a>
+                            </div>                   
+                        </div>
+                    </div>        
+                </div>
+            {% endfor %}
+        {% else %}
+        <h2 colspan="6" class="my-5 fs-1 text-uppercase">Aucune tâche en cours</h2>
+        {% endif %}
+    </div>
 {% endblock %}
