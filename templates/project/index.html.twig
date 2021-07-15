@@ -8,8 +8,8 @@
         Bonjour {{ app.user.firstname }} {{ app.user.lastname }} <a href="{{ path('app_logout') }}" class="btn btn-light">Se déconnecter</a>
     </div>
 {% endif %}
-<h1>Tous tes projets</h1>
-<a class="btn btn-light mt-3" href="{{ path('project_new') }}">Nouveau projet</a>
+<h1>Tout tes projets</h1>
+<a class="btn btn-light mt-5" href="{{ path('project_new') }}">Nouveau projet</a>
 <div class="row">
 {% for project in projects %}
     <div class="col-sm-12 col-md-6 col-xl-3 py-5">
@@ -32,7 +32,7 @@
         </div> 
     </div>       
 {% else %}
-        <h2 colspan="6">Aucun projet en cours</h2>
+        <h2 colspan="6" class="my-5 fs-1 text-uppercase">Aucun projet en cours</h2>
 {% endfor %}  
 </div>     
 {% endblock %}

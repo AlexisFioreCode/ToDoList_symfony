@@ -15,18 +15,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     * @IsGranted("IS_AUTHENTICATED_FULLY")
     */
 
-#[Route('/project')]
-#[Route('/')]
-
-    
-
 class ProjectController extends AbstractController
 {
-    #[Route('/', name: 'project_index', methods: ['GET'])]
+    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('/project', name: 'project_index', methods: ['GET'])]
     public function index(ProjectRepository $projectRepository): Response
     {   
         $projectRepository=$this->getDoctrine()->getRepository(Project::class);
-        $projects = $projectRepository->getProjects();
+        $projects = $projectRepository->getProjects($this->getUser()->getId());
 
 
         return $this->render('project/index.html.twig', [
@@ -34,7 +30,7 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'project_new', methods: ['GET', 'POST'])]
+    #[Route('/project/new', name: 'project_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $project = new Project();
@@ -57,15 +53,17 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'project_show', methods: ['GET'])]
+    #[Route('/project/{id}', name: 'project_show', methods: ['GET'])]
     public function show(Project $project): Response
     {
+        $task = $project->getTasks();
         return $this->render('project/show.html.twig', [
             'project' => $project,
+            'tasks' => $task,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'project_edit', methods: ['GET', 'POST'])]
+    #[Route('/project/{id}/edit', name: 'project_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Project $project): Response
     {
         $form = $this->createForm(ProjectType::class, $project);
@@ -83,15 +81,15 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'project_delete', methods: ['POST'])]
-    public function delete(Request $request, Project $project): Response
+    #[Route('/project/delete/{!id<\d+>?1}', name: 'project_delete')]
+    public function delete(int $id=1 , ProjectRepository $projectRepository ): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$project->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($project);
-            $entityManager->flush();
-        }
+        $project = $projectRepository->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($project);
+        $entityManager->flush();
+       
 
-        return $this->redirectToRoute('project_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
     }
 }
