@@ -4,7 +4,7 @@
 
 {% block body %}
     <a class="btn btn-light my-3" href="{{ path('project_index') }}">Revenir à l'acceuil</a>
-    <h1>Le projet : {{ project.name }}</h1>
+    <h1 class='text-center mb-3 text-uppercase'>Le projet : {{ project.name }}</h1>
     <div class="card text-center">
         <div class="card-header">
         Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
@@ -28,7 +28,7 @@
                     <div class="card text-center">
                         <div class="card-header">
                         <p class="text-uppercase">{{ task.name }}</p>
-                        
+                        <p class="text-uppercase">{{ task.state }}</p> 
                         Enregistré le :{{ task.createdDate ? task.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
                         </div>
                         <div class="card-body">
