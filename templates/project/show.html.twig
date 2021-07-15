@@ -7,11 +7,11 @@
     <h1 class='text-center mb-3 text-uppercase'>Le projet : {{ project.name }}</h1>
     <div class="card text-center">
         <div class="card-header">
-        Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
+        Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d') : '' }}</h6>             
         </div>
         <div class="card-body">
             <p class="card-text">Description : {{ project.description }}</p>
-            <p class='text-danger fw-bold'> Fin du projet le :{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }} </p>
+            <p class='text-uppercase fw-bold'> Fin du projet le :{{ project.deadline ? project.deadline|date('Y-m-d') : '' }} </p>
         </div>
         <div class="card-footer text-muted">
             <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -25,15 +25,20 @@
         {% if tasks is not empty %}
             {% for task in tasks %}
                 <div class="col-sm-12 col-md-6 col-xl-3 py-5">
-                    <div class="card text-center">
+                    <div class="card task text-center">
                         <div class="card-header">
                         <p class="text-uppercase">{{ task.name }}</p>
-                        <p class="text-uppercase">{{ task.state }}</p> 
-                        Enregistré le :{{ task.createdDate ? task.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
+                        {% if task.state == "En cours" %}
+                            <p class="text-uppercase state" id='state'>{{ task.state }}<i class="fas fa-check-circle"></i></p>
+                            <a  type="button" href="{{ path('task_editState', {'id': task.id}) }}" class="btn btn-warning me-3">Terminer</a>
+                        {% else %}
+                            <p class="text-uppercase state" id='state'>{{ task.state }}<i class="fas fa-times-circle"></i></p>                  
+                        {% endif %}          
                         </div>
                         <div class="card-body">
+                            <p class="card-text">Enregistré le :{{ task.createdDate ? task.createdDate|date('Y-m-d') : '' }}</p>                   
                             <p class="card-text">Description : {{ task.description }}</p>
-                        <p class='text-danger fw-bold'> Fin de la tâche prévue pour le :{{ task.deadline ? task.deadline|date('Y-m-d H:i:s') : '' }} </p>
+                            <p class='text-uppercase fw-bold'> Fin de la tâche prévue pour le :{{ task.deadline ? task.deadline|date('Y-m-d') : '' }} </p>
                         </div>
                         <div class="card-footer text-muted">
                             <div class="btn-group" role="group" aria-label="Basic outlined example">

@@ -97,17 +97,17 @@ resize: vertical;
 body{
     min-height:100vh;
     max-width: 100vw;
-    background-color: #b0d6e4;
+    background-color: #ebf6dc;
 }
 header {
     background-color: bisque;
+    min-height: 15vh;
 }
 h1 {
     margin: 0 auto;
 }
 main {
-    min-height: 60vh;
-    
+    min-height: 70vh;   
 }
 footer {
     bottom: 0;
@@ -139,7 +139,53 @@ footer {
     background-color: #635147;
     border-color: #635147;
 }
+.card {
+    background-color: #635147;
+    border-color: #635147;
+    color: white;
+    font-weight: bold;
+    transition: transform .2s
+}
+.card:hover {
+    transform: scale(1.1);
+}
+.fa-check-circle {
+    color: lime;
+  }
+.fa-times-circle {
+    color: red;
+}
+.done {
+    opacity: 0.5;
+    pointer-events: none;
+}
 
+.flip-vertical-right {
+	-webkit-animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	        animation: flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+ @-webkit-keyframes flip-vertical-right {
+    0% {
+      -webkit-transform: rotateY(0);
+              transform: rotateY(0);
+    }
+    100% {
+      -webkit-transform: rotateY(180deg);
+              transform: rotateY(180deg);
+    }
+  }
+  @keyframes flip-vertical-right {
+    0% {
+      -webkit-transform: rotateY(0);
+              transform: rotateY(0);
+    }
+    100% {
+      -webkit-transform: rotateY(180deg);
+              transform: rotateY(180deg);
+    }
+  }
+  
 
 /* ==========================================================================
     Helper classes
@@ -229,16 +275,12 @@ clear: both;
     Modify as content requires.
     ========================================================================== */
 
-@media only screen and (min-width: 768px) {
-footer {
-    position: absolute;
-}
-}
-
 @media print,
 (-webkit-min-device-pixel-ratio: 1.25),
 (min-resolution: 1.25dppx),
 (min-resolution: 120dpi) {
+
+
 /* Style adjustments for high resolution devices */
 }
 
