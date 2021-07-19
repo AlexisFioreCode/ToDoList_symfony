@@ -15,17 +15,17 @@
     <div class="col-sm-12 col-md-6 col-xl-3 py-5">
         <div class="card text-center">
             <div class="card-header">
-            Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d H:i:s') : '' }}</h6>             
+            Enregistré le :{{ project.createdDate ? project.createdDate|date('Y-m-d') : '' }}</h6>             
             </div>
             <div class="card-body">
                 <h5 class="card-title">Projet :{{ project.name }}</h5>
                 <p class="card-text">Description : {{ project.description }}</p>
-               <p class='text-danger fw-bold'> Fin du projet le :{{ project.deadline ? project.deadline|date('Y-m-d H:i:s') : '' }} </p>
+               <p class='text-uppercase fw-bold'> Fin du projet le : {{ project.deadline ? project.deadline|date('Y-m-d') : '' }} </p>
             </div>
             <div class="card-footer text-muted">
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                    <a type="button" href="{{ path('project_show', {'id': project.id}) }}" class="btn btn-outline-dark me-3">Voir</a>
-                    <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-dark me-3">Modifier</a>
+                    <a type="button" href="{{ path('project_show', {'id': project.id}) }}" class="btn btn-light me-3">Voir</a>
+                    <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-light me-3">Modifier</a>
                     <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
                 </div>                   
             </div>

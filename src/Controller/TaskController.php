@@ -18,7 +18,6 @@ class TaskController extends AbstractController
     #[Route('/task/new/{projectId}', name: 'task_new', methods: ['GET', 'POST'])]
     public function new(int $projectId , Request $request, ProjectRepository $projectRepository): Response
     {
-        
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
@@ -28,6 +27,13 @@ class TaskController extends AbstractController
             $task->setProject($project);
             $task->setCreatedDate(new \DateTime());
             $task->setState("En cours");
+            if ($task->getDeadline() > $project->getDeadline()) {
+                $this->addFlash(
+                    'notice',
+                    'Veuiller rentrer une date valide'
+                );
+                return $this->redirectToRoute('task_new', ['projectId'=> $projectId] , Response::HTTP_SEE_OTHER);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($task);
             $entityManager->flush();
@@ -66,6 +72,17 @@ class TaskController extends AbstractController
         $task = $taskRepository->find($id);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($task);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('project_show', ['id'=> $task->getProject()->getId()], Response::HTTP_SEE_OTHER);
+    }
+    
+    #[Route('/task/edit/{!id<\d+>?1}', name: 'task_editState')]
+    public function editState(int $id, TaskRepository $taskRepository) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $task = $entityManager->getRepository(Task::class)->find($id);
+        $task->setState('Terminé');
         $entityManager->flush();
 
         return $this->redirectToRoute('project_show', ['id'=> $task->getProject()->getId()], Response::HTTP_SEE_OTHER);
