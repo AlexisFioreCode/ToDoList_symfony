@@ -5,6 +5,11 @@
 {% block body %}
     <h1>Ajouter une tâche</h1>
 
+    {% for message in app.flashes('notice') %}
+    <div class="flash-notice alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
     {{ include('task/_form.html.twig') }}
 
     
