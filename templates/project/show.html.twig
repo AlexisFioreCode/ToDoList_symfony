@@ -15,7 +15,7 @@
         </div>
         <div class="card-footer text-muted">
             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-dark me-3">Modifier</a>
+                <a  type="button" href="{{ path('project_edit', {'id': project.id}) }}" class="btn btn-light me-3">Modifier</a>
                 <a  type="button" href="{{ path('project_delete', {'id': project.id}) }}"  class="btn btn-danger">Supprimer</a>
             </div>                   
         </div>
@@ -24,17 +24,14 @@
     <div class="row">
         {% if tasks is not empty %}
             {% for task in tasks %}
+             {% if task.state == "En cours" %}
                 <div class="col-sm-12 col-md-6 col-xl-3 py-5">
-                    <div class="card task text-center">
+                    <div class="card text-center">
                         <div class="card-header">
-                        <p class="text-uppercase">{{ task.name }}</p>
-                        {% if task.state == "En cours" %}
-                            <p class="text-uppercase state" id='state'>{{ task.state }}<i class="fas fa-check-circle"></i></p>
-                            <a  type="button" href="{{ path('task_editState', {'id': task.id}) }}" class="btn btn-warning me-3">Terminer</a>
-                        {% else %}
-                            <p class="text-uppercase state" id='state'>{{ task.state }}<i class="fas fa-times-circle"></i></p>                  
-                        {% endif %}          
-                        </div>
+                        <p class="text-uppercase">{{ task.name }}</p>                      
+                            <p>{{ task.state }}    <i class="fas fa-check-circle"></i></p>
+                            <a type="button" href="{{ path('task_editState', {'id': task.id}) }}" onclick="return confirm('Voulez vous vraiment la terminer?')" class="btn btn-warning me-3">Terminer</a>
+                            </div>
                         <div class="card-body">
                             <p class="card-text">Enregistré le :{{ task.createdDate ? task.createdDate|date('Y-m-d') : '' }}</p>                   
                             <p class="card-text">Description : {{ task.description }}</p>
@@ -42,12 +39,27 @@
                         </div>
                         <div class="card-footer text-muted">
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <a  type="button" href="{{ path('task_edit', {'id': task.id}) }}" class="btn btn-dark me-3">Modifier</a>
+                                <a  type="button" href="{{ path('task_edit', {'id': task.id}) }}" class="btn btn-light me-3">Modifier</a>
                                 <a  type="button" href="{{ path('task_delete', {'id': task.id}) }}"  class="btn btn-danger">Supprimer</a>
                             </div>                   
                         </div>
                     </div>        
                 </div>
+                {% else %}
+                    <div class="col-sm-12 col-md-6 col-xl-3 py-5">
+                        <div class="card done text-center">
+                            <div class="card-header">
+                                <p class="text-uppercase">{{ task.name }}</p>                      
+                                <p class="text-uppercase state">{{ task.state }}   <i class="fas fa-times-circle"></i></p> 
+                                </div>
+                            <div class="card-body">
+                                <p class="card-text">Enregistré le :{{ task.createdDate ? task.createdDate|date('Y-m-d') : '' }}</p>                   
+                                <p class="card-text">Description : {{ task.description }}</p>
+                                <p class='text-uppercase fw-bold'> Fin de la tâche prévue pour le :{{ task.deadline ? task.deadline|date('Y-m-d') : '' }} </p>
+                            </div>
+                        </div>        
+                    </div>                                           
+                {% endif %}          
             {% endfor %}
         {% else %}
         <h2 colspan="6" class="my-5 fs-1 text-uppercase">Aucune tâche en cours</h2>
