@@ -89,7 +89,6 @@ class ProjectController extends AbstractController
         $entityManager->remove($project);
         $entityManager->flush();
        
-
         return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
     }
 }

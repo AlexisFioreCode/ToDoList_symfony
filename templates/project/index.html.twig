@@ -10,7 +10,7 @@
 {% endif %}
 <h1>Tout tes projets</h1>
 <a class="btn btn-light mt-5" href="{{ path('project_new') }}">Nouveau projet</a>
-<div class="row">
+<div class="row" id="projects">
 {% for project in projects %}
     <div class="col-sm-12 col-md-6 col-xl-3 py-5">
         <div class="card text-center">

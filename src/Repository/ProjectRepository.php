@@ -55,7 +55,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
-    }
+    }   
 
     /* public function getSingleProject(int $id) {
         return $this->createQueryBuilder('p')
